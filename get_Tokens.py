@@ -15,7 +15,6 @@ def getTokens(data):#function for getting the tokens for some website
 		if key != '__mainUrl__' and data[key] != None:
 			tokenizedPage = myTokenizer.tokenize(data[key].lower())
 			for i, token in enumerate(tokenizedPage):
-				tokenDict = {}
 				if len(token) == 1:
 					token = token.translate(str.maketrans('','',string.punctuation))
 				token = token.translate(str.maketrans("\/.", "&&,"))

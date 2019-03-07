@@ -1,14 +1,16 @@
 import Link_Grabber as linkGrab
-import dbFormatting as db
+import dbFormatting as database
 import get_Tokens as tkn
 import sys, os
+
 class indexCreator:
 	def __init__(self):
 		self.__isWindows = self.__systemCheck()
-		self.__corpus = {}
+		self.__corpus = {'__total__':0,'__siteTotal__':0}
+		self.__weights = {}
 		
 	def indexCreation(self):
-	
+		
 		links = self.__requestLinks()
 		self.clear()
 		if links == None:
@@ -25,11 +27,16 @@ class indexCreator:
 			# print(data)
 			if data != None:
 				tokenizedData = tkn.getTokens(data)
-				print('Finished with:', link)
+				print('Finished with:', links[link][0])
 				# print(tokenizedData)
+				db = database.dbCreate(folder)
+				db.folderCheck()
+				self.__corpus, self.__weights = db.createJson(links[link][0], tokenizedData, self.__corpus, self.__weights)
 
 			else:
-				print('Bad Link:',link)
+				print('Bad Link:',links[link][0])
+		db = database.dbCreate(folder)
+		db.createCorpus(self.__corpus, self.__weights)
 
 
 	def __requestLinks(self):
@@ -44,16 +51,18 @@ class indexCreator:
 			link = str(input('Please enter a valid URL> ')).lower()
 			
 			
-			if link == 'd' or link == 'done':
-				internal = 'n'
-			else:
-				internal = str(input("Would you like to get all pages for this site?(y/n)> ")).lower()
+			# if link == 'd' or link == 'done':
+			# 	internal = 'n'
+			# else:
+			# 	internal = str(input("Would you like to get all pages for this site?(y/n)> ")).lower()
 			
 			
-			if internal == 'y' or internal == 'yes':
-				internl = True
-			else:
-				internl = False
+			# if internal == 'y' or internal == 'yes':
+			# 	internl = True
+			# else:
+			# 	internl = False
+
+			internl = False
 			if link == 'done' or link == 'd':
 				if len(links) == 0:
 					return None
