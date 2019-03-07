@@ -21,6 +21,9 @@ class indexCreator:
 		if folder == '':
 			print('Invalid Folder Name.')
 			sys.exit(0)
+		if folder[-1] != '/':
+			folder = folder+'/'
+			
 		for link in range(len(links)):
 			item = linkGrab.grabLinks(links[link][0], links[link][1])
 			data = item.getParsed()
@@ -89,7 +92,15 @@ class indexCreator:
 			self.__isWindows = True
 		else:
 			self.__isWindows = False
-
+	def __locateCorpus(self, folder):
+		file = folder+'__corpus__.json'
+		try:
+			with open(file,'r') as f:
+				document = json.load(f)
+			return document
+		except:
+			print('No Index Found, Creating New Index.')
+			return {'__total__':0,'__siteTotal__':0}
 if __name__ == '__main__':
 	ic = indexCreator()
 	ic.indexCreation()

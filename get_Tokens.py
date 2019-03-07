@@ -19,14 +19,14 @@ def getTokens(data):#function for getting the tokens for some website
 					token = token.translate(str.maketrans('','',string.punctuation))
 				token = token.translate(str.maketrans("\/.", "&&,"))
 				if token in pageTokens:
-					pageTokens[token]['tf'] +=1
+					pageTokens[token]['tf'] += 1
 					pageTokens[token]['pos'].append(i)
 				else:
 					if len(token) > 0 and "'" not in token:
-						if i+1 < len(tokenizedPage):
-							if "'" in tokenizedPage[i+1]:
-								if "'s" not in tokenizedPage[i+1]:
-									token += tokenizedPage[i+1]
+						if i + 1 < len(tokenizedPage):
+							if "'" in tokenizedPage[i + 1]:
+								if "'s" not in tokenizedPage[i + 1]:
+									token += tokenizedPage[i + 1]
 						pageTokens[token] = {'tf':1, 'pos':[i]}
 			# print(pageTokens)
 			tokenData[key] = pageTokens

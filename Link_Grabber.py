@@ -25,7 +25,7 @@ class myParser(HTMLParser):
 				if attr[0] == 'href':
 					x = attr[1]
 					# if the link is an internal link add it to links
-					if x[0] == '/' and len(x)!=1 :
+					if x[0] == '/' and len(x) != 1 :
 						self.__links.append(x) 
 		#go through attributes and check for content 				
 		for i in attrs:
@@ -33,8 +33,8 @@ class myParser(HTMLParser):
 				#since the content holds lots of indexable data, we want to grab it.
 				#we only grab it if it is not a link. = is excluded as it usually denotes code 
 				if 'http' not in i[1] and 'www' not in i[1] and '=' not in i[1]:
-					self.__data+=' '
-					self.__data+=i[1]
+					self.__data += ' '
+					self.__data += i[1]
 		#update the current tag and its attributes
 		self.__currentTag = tag
 		self.__currentAttrs = attrs
@@ -45,7 +45,7 @@ class myParser(HTMLParser):
 		if self.__currentTag not in restricted:
 			#get rid of new lines and such
 			data = data.replace('\\n','').replace('\\r','').replace('\\t','')
-			if len(data)!=0:
+			if len(data) != 0:
 				#add the data to the string of the current link
 				self.__data += ' '
 				self.__data += data
@@ -74,7 +74,7 @@ class grabLinks:
 	
 	def getParsed(self):
 		#initialized for the first page
-		homePage, homeLinks = self.__getPage(self.__mainUrl)
+		homePage, homeLinks = self.__getPage( self.__mainUrl )
 		if homePage == None:
 			return None
 		self.__visited[self.__mainUrl] = homePage
@@ -83,7 +83,7 @@ class grabLinks:
 			return self.__visited
 
 		for i in homeLinks:
-			self.__links.append(self.__mainUrl+i)
+			self.__links.append( self.__mainUrl + i )
 		while True:
 			#stop once we run out of internal links
 			if len(self.__links) == 0:
@@ -98,7 +98,7 @@ class grabLinks:
 					if linkLinks != None:
 						for i in linkLinks:
 							#i is /link right now, formatted to url/link
-							newLink = self.__mainUrl+i
+							newLink = self.__mainUrl + i
 							#check and only add each link if we have not already visited it
 							if newLink not in self.__visited:
 								self.__links.append(newLink)
