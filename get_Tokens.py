@@ -10,6 +10,7 @@ def getTokens(data):#function for getting the tokens for some website
 	tokenData = {'__mainUrl__': mainUrl}
 
 	for key in data:
+		# print(key)
 		pageTokens = {}
 		if key != '__mainUrl__' and data[key] != None:
 			tokenizedPage = myTokenizer.tokenize(data[key].lower())
@@ -28,6 +29,6 @@ def getTokens(data):#function for getting the tokens for some website
 								if "'s" not in tokenizedPage[i+1]:
 									token += tokenizedPage[i+1]
 						pageTokens[token] = {'tf':1, 'pos':[i]}
-
+			# print(pageTokens)
 			tokenData[key] = pageTokens
-		return tokenData
+	return tokenData

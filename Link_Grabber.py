@@ -64,13 +64,13 @@ class grabLinks:
 	#for getting all the data related to each internal link, returns a dict
 	#dictionary in form of {'mainurl':url, url:data}, if data == None, 
 	#link has no data that can be parsed or the url is bad
-	def __init__(self, webpage):
+	def __init__(self, webpage, internal):
 		#webpage must be entered as https:// or http:// 
 		#followed by address, last char not /
 		self.__links = []
 		self.__mainUrl = webpage
 		self.__visited = {'__mainUrl__':webpage}
-
+		self.__getInternal = internal
 	
 	def getParsed(self):
 		#initialized for the first page
@@ -78,7 +78,10 @@ class grabLinks:
 		if homePage == None:
 			return None
 		self.__visited[self.__mainUrl] = homePage
-		#could be put in other class, this is lazy
+		#stop here if we do not want to get all internal links of a webpage
+		if self.__getInternal == False:
+			return self.__visited
+
 		for i in homeLinks:
 			self.__links.append(self.__mainUrl+i)
 		while True:
@@ -92,12 +95,13 @@ class grabLinks:
 				if link not in self.__visited and link != None:
 					#get the links on that page and the data on that page
 					linkData, linkLinks = self.__getPage(link)
-					for i in linkLinks:
-						#i is /link right now, formatted to url/link
-						newLink = self.__mainUrl+i
-						#check and only add each link if we have not already visited it
-						if newLink not in self.__visited:
-							self.__links.append(newLink)
+					if linkLinks != None:
+						for i in linkLinks:
+							#i is /link right now, formatted to url/link
+							newLink = self.__mainUrl+i
+							#check and only add each link if we have not already visited it
+							if newLink not in self.__visited:
+								self.__links.append(newLink)
 					#add the data to the dictionary		
 					self.__visited[link] = linkData
 		#return links:data dictionary
