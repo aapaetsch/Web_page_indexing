@@ -1,3 +1,5 @@
+import json
+import numpy as np
 class getDocs:
 	def __init__(self, query, path):
 		self.__query = query
