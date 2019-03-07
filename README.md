@@ -21,4 +21,6 @@ removed from the index. The end goal for this program is for it to act like a mi
 - Indexing of subpages for a webpage
   - It would be easy to implement subpages where they contribute to the scores of the parent page
 - Queries have not yet been added
+- Eventually want to use elasticsearch to store indexed data
+- Deleting sites 
 
