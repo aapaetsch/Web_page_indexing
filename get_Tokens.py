@@ -1,13 +1,19 @@
 from nltk.tokenize import RegexpTokenizer
+import nltk
 import string
 
 def getTokens(data):#function for getting the tokens for some website
 	#only uncomment if you do not have nltk
 	#nltk.download('punkt')
 	myTokenizer = RegexpTokenizer(r"\w+|\$[\d\.]+|\s+^.")
-	#tokenizer 
+	#tokenizer
 	mainUrl = data['__mainUrl__']
 	tokenData = {'__mainUrl__': mainUrl}
+    #adding in stemming
+	pStemmer = nltk.stem.porter.PorterStemmer()
+	#TODO: language recognition so stemming can be accurate
+	sStemmer = nltk.stem.snowball.SnowballStemmer('english')
+
 
 	for key in data:
 		# print(key)
