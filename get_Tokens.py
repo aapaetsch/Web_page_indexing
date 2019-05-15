@@ -10,11 +10,17 @@ def getTokens(data):#function for getting the tokens for some website
 	mainUrl = data['__mainUrl__']
 	tokenData = {'__mainUrl__': mainUrl}
     #adding in stemming
+<<<<<<< HEAD
 
 	#TODO: language recognition so stemming can be accurate
 	pStemmer = nltk.stem.porter.PorterStemmer()
 	sStemmer = nltk.stem.snowball.SnowballStemmer('english')
 	stopWords = list(set( nltk.corpus.stopwords.words('english')))
+=======
+	pStemmer = nltk.stem.porter.PorterStemmer()
+	#TODO: language recognition so stemming can be accurate
+	sStemmer = nltk.stem.snowball.SnowballStemmer('english')
+>>>>>>> 2ae7f28e84a2d039fbf20d0a77dbcd6c55de99fb
 
 
 	for key in data:
