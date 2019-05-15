@@ -10,9 +10,11 @@ def getTokens(data):#function for getting the tokens for some website
 	mainUrl = data['__mainUrl__']
 	tokenData = {'__mainUrl__': mainUrl}
     #adding in stemming
-	pStemmer = nltk.stem.porter.PorterStemmer()
+
 	#TODO: language recognition so stemming can be accurate
+	pStemmer = nltk.stem.porter.PorterStemmer()
 	sStemmer = nltk.stem.snowball.SnowballStemmer('english')
+	stopWords = list(set( nltk.corpus.stopwords.words('english')))
 
 
 	for key in data:
@@ -21,9 +23,14 @@ def getTokens(data):#function for getting the tokens for some website
 		if key != '__mainUrl__' and data[key] != None:
 			tokenizedPage = myTokenizer.tokenize(data[key].lower())
 			for i, token in enumerate(tokenizedPage):
+				if token in stopWords:
+					token = ''
+
 				if len(token) == 1:
 					token = token.translate(str.maketrans('','',string.punctuation))
 				token = token.translate(str.maketrans("\/.", "&&,"))
+				token = sStemmer.stem(pStemmer.stem(token))
+
 				if token in pageTokens:
 					pageTokens[token]['tf'] += 1
 					pageTokens[token]['pos'].append(i)
